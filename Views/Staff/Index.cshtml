@@ -1,0 +1,296 @@
+﻿@using System.Data;
+@model IEnumerable<POS_OJT.ViewModels.StaffViewModel>
+
+@{
+    //ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    h2 {
+        background: #269956;
+        color: white;
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 0;
+    }
+
+    .edit {
+        color: #28a745;
+    }
+
+    .delete {
+        color: red;
+    }
+
+    table {
+        border: 1px solid #dee2e6;
+        padding: 10px
+    }
+
+    th {
+        color: #504c4c;
+        background: #dee2e6;
+        border-right: 1px solid #d8d8d8;
+    }
+
+    td {
+        border-right: 1px solid #dee2e6;
+    }
+
+    .searchContainer {
+        border: 1px solid #dee2e6;
+        width: 100%;
+        padding: 12px;
+        text-align: left;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .pcn {
+        padding-left: 10px;
+    }
+
+    form {
+        padding-top: 20px;
+    }
+
+    select {
+        width: 46%;
+        height: 36px;
+        /*margin-left: 26px;*/
+        margin-right: 16px;
+        border: 1px solid #dee2e6;
+    }
+
+    .btn-success {
+        background: #269956;
+        width: 77px;
+    }
+
+    .create {
+        margin-bottom: 10px;
+    }
+
+    .lb1 {
+        margin-right: 16px;
+    }
+
+    .sb {
+        border: 1px solid #dee2e6;
+        border-radius: 3px;
+        height: 36px;
+        width: 26%;
+    }
+
+    .btn1 {
+        width: 106px;
+    }
+
+    .download{
+        width: 106px;
+    }
+
+    .form-add {
+        margin-bottom: 10px;
+    }
+
+    .form-add a {
+        margin-right: 100px;
+    }
+
+    .form-add form {
+        display: inline;
+     }
+
+    .img-70 {
+        width: 70px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid border">
+            @using (Html.BeginForm("Index", "Staff", FormMethod.Get))
+            {
+                <!-- First Row -->
+                <div class="form-row m-2">
+                    <div class="col-md-6 row ml">
+                        <label class="col-md-4 col-form-label">User Name</label>
+                        <div class="col-md-6">
+                            @Html.TextBox("staffName", null, new { @class = "form-control", @placeholder = "Name" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 row ml-0">
+                        <label for="" class="col-md-4 col-form-label">User No</label>
+                        <div class="col-md-6">
+                            @Html.DropDownList("ddlStaffNo", ViewBag.staffnumber as SelectList, "Select No", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <!--Second Row-->
+                <div class="form-row mt-4 ml-2">
+                    <div class="col-md-6 row">
+                        <label for="" class="col-md-4 col-form-label">Join From</label>
+                        <div class="col-md-6">
+                            @Html.TextBox("joinFrom", null, new { type = "date", @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 row">
+                        <label for="" class="col-md-4 col-form-label">User Role</label>
+                        <div class="col-md-6">
+                            @Html.DropDownList("ddlStaffRole", (IEnumerable<SelectListItem>)ViewBag.staffRole, "Select Role", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Third Row -->
+                <div class="form-row mt-4 ml-2">
+                    <div class="col-md-6 row">
+                        <label for="" class="col-md-4 col-form-label">User Type</label>
+                        <div class="col-md-6">
+                            @Html.DropDownList("ddlStaffType", (IEnumerable<SelectListItem>)ViewBag.staffType, "Select Type", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 row">
+                        <label for="" class="col-md-4 col-form-label">Position</label>
+                        <div class="col-md-6">
+                            @Html.DropDownList("ddlStaffPosition", (IEnumerable<SelectListItem>)ViewBag.staffPosition, "Select Position", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-success mt-3 ml-2 mb-2 col-md-1" type="submit" id="search">Search</button>
+
+            }
+        </div>
+
+        <a href="/Staff/Create" class="btn btn-success col-md-1 mt-3 mb-2">Add</a>
+        <a href="@Url.Action("Download", "Staff")" class="btn btn-success col-md-1 mt-2 ml-2 download">Download</a>
+
+            <h2>User List</h2>
+            <table id="pagination" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">User No</th>
+                        <th scope="col" class="text-center">Role</th>
+                        <th scope="col">User Type</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Current Job Place</th>
+                        <th scope="col">NRC No</th>
+                        <th scope="col" class="text-center">Join From</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @*<img src="@Url.Content(item.photo)" class="img-70">*@
+                                <img src="~/images/upload/staff/@item.photo" width="100" height="100" />
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.staff_number)
+                            </td>
+                            <td class="text-left">
+                                @if (item.role == 1)
+                                {
+                                    var role1 = "Super Admin";
+                                    @role1
+                                }
+
+                                @if (item.role == 2)
+                                {
+                                    var role2 = "Company Admin";
+                                    @role2
+                                }
+
+                                @if (item.role == 3)
+                                {
+                                    var role3 = "Shop Admin";
+                                    @role3
+                                }
+
+                                @if (item.role == 4)
+                                {
+                                    var role4 = "Waiter Staff";
+                                    @role4
+                                }
+
+                                @if (item.role == 5)
+                                {
+                                    var role5 = "Kitchen Staff";
+                                    @role5
+                                }
+
+                                @if (item.role == 6)
+                                {
+                                    var role6 = "Cashier Staff";
+                                    @role6
+                                }
+
+                                @if (item.role == 7)
+                                {
+                                    var role7 = "Sale Staff";
+                                    @role7
+                                }
+                            </td>
+                            <td>
+                                @if (item.staff_type == 1)
+                                {
+                                    var staff_type_1 = "Full Time";
+                                    @staff_type_1
+                                }
+
+                                @if (item.staff_type == 2)
+                                {
+                                    var staff_type_2 = "Part Time";
+                                    @staff_type_2
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.position)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.name1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nrc_number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.join_from)
+                            </td>
+                            <td class="btn-center">
+                                <a href="@Url.Action("Edit", new { id = item.id})">
+                                    <i class="far fa-edit edit"></i>
+                                </a>
+                            </td>
+                            <td class="btn-center">
+                                <a href="@Url.Action("Delete", new { id = item.id})" onclick="return confirm('Are you sure you want to delete?')">
+                                    <i class="fas fa-trash-alt delete"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="11" class="text-red text-center text-bold">No match data found!</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+﻿@model POS_OJT.Models.SaleClass
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SaleClass</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.invoice_number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.invoice_number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shop_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shop_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.terminal_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.terminal_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sale_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sale_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.remark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.remark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.amount_tax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amount_tax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.paid_amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.paid_amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.change_amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.change_amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.invoice_status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.invoice_status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.print_count)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.print_count)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.reason)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.reason)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_datetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_datetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.update_user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.update_user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.update_datetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.update_datetime)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

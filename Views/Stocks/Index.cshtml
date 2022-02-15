@@ -1,0 +1,118 @@
+﻿@using System;
+@using System.Web;
+@using System.Web.Mvc.Html;
+@using System.Data;
+@model System.Data.DataTable
+
+@{ ViewBag.Title = "Stock";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section Sale
+{
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                @using (Html.BeginForm("Index", "Stocks", FormMethod.Get))
+                {
+                    <form class="needs-validation border rounded" novalidate>
+                        <!-- First Row -->
+                        <div class="form-row m-2">
+                            <div class="col-md-6 row">
+                                <label for="inputPassword" class="col-md-4 col-form-label">Product Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="productName" id="productName" placeholder="Product Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6 row">
+                                <label for="inputPassword" class="col-md-4 col-form-label">Shop Name</label>
+                                <div class="col-md-6">
+                                    @Html.DropDownList("shoplist", ViewBag.shoplistname as SelectList, "Choose Shop", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Second Row -->
+                        <div class="form-row mt-4 ml-2">
+                            <div class="col-md-6 row">
+                                <label for="inputPassword" class="col-md-4 col-form-label">Warehouse Name</label>
+                                <div class="col-md-6">
+                                    @Html.DropDownList("warehouselist", ViewBag.warehouselistname as SelectList, "Choose Warehouse", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 row">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="stock_search" id="less_stock" value="less_stock">
+                                    <label class="form-check-label" for="less_stock">
+                                        Show Less Stock
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="stock_search" id="quantity" value="quantity">
+                                    <label class="form-check-label" for="quantity">
+                                        Stock By Quantity
+                                    </label>
+                                </div>
+                        </div>
+                        </div>
+
+                        <!-- Buttons-->
+                        <button class="btn btn-success mt-3 ml-2 mb-2 col-md-1" type="submit" id="search">Search</button>
+                        <a href="@Url.Action("Reset", "Stocks")" class="btn btn-success col-md-1 mt-2 ml-2" type="reset">Reset</a>
+                    </form>
+
+                }
+            </div><!-- /.container-fluid -->
+
+            <a href="/Stocks/Create" class="btn btn-success col-md-1 m-2">Add</a>
+
+            <div class="container-fluid">
+                <div class="bg-success mt-2 border rounded">
+                    <p class="m-2">Stock List</p>
+                </div>
+                <div class="table-responsive" style="overflow-x: auto;">
+                    <table id="pagination" class="table mt-2">
+                        <thead>
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col"></th>
+                                <th scope="col" class="col-md-1 sorting-asc">Product Code</th>
+                                <th scope="col" class="col-md-1 sorting-asc">Product Name </th>
+                                <th scope="col" class="col-md-1 sorting-asc">Shop Name</th>
+                                <th scope="col" class="col-md-1 sorting-asc">Warehouse Name</th>
+                                <th scope="col" class="col-md-1 sorting-asc">Stock Quantity</th>
+                                <th scope="col" class="col-md-1 sorting-asc">Price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int index = 1;}
+                            @foreach (DataRow row in Model.Rows)
+                            {
+
+                                <tr>
+                                    <td class="text-right"> @index</td>
+                                    <td>@row[3]</td>
+                                    <td class="text-right col-md-1"> @row[2] </td>
+                                    <td class="text-left col-md-1"> @row[1] </td>
+                                    <td class="text-left col-md-1"> @row[4] </td>
+                                    <td class="text-left col-md-1"> @row[5] </td>
+                                    <td class="text-right col-md-1"> @row[6] </td>
+                                    <td class="text-right col-md-1">@row[7]</td>
+                                    <td>
+                                        @*<a class="btn btn-success btn-sm" href="#" role="button">Cancle Invoice</a>*@
+                                        <a href="@Url.Action("Edit", new { id=@row[0]})" class="btn btn-success btn-sm">
+                                            Stock Transfer
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>}

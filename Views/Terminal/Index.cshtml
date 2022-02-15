@@ -1,0 +1,114 @@
+﻿@using System.Web.Mvc.Html;
+@using System.Data;
+@model System.Data.DataTable
+
+@{ ViewBag.Title = "Terminal";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<style>
+    h2 {
+        background: #269956;
+        color: white;
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 0;
+    }
+
+    .mb {
+        margin-bottom: 15px;
+    }
+
+    .btn-success {
+        background: #269956;
+        width: 77px;
+    }
+
+    .edit {
+        color: #28a745;
+    }
+
+    table {
+        border: 1px solid #dee2e6;
+        padding: 10px
+    }
+
+    th {
+        color: #504c4c;
+        background: #dee2e6;
+        border-right: 1px solid #d8d8d8;
+    }
+
+    td {
+        border-right: 1px solid #dee2e6;
+    }
+
+    .delete {
+        color: red;
+    }
+</style>
+
+<div class="content-wrapper">
+    <link rel="stylesheet" href="~/Content/icofont.min.css" />
+        <div class="container-fluid mb">
+            <a href="/Terminal/Create" class="btn btn-success col-md-1">Add</a>
+        </div>
+        <div class="container-fluid">
+                <h2>Terminal List</h2>
+
+            <section>
+                <table class="table border" id="pagination">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="text-center col-md-1">No</th>
+                            <th scope="col" class="text-center col-md-5">Name</th>
+                            <th scope="col" class="text-center col-md-4">Shop Type</th>
+                            <th scope="col" class="col-md-1"></th>
+                            <th scope="col" class="col-md-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int index = 1;}
+                        @foreach (DataRow row in Model.Rows)
+                        {
+                            <tr class="text-center">
+                                <td>@index</td>
+                                <td>@row[1]</td>
+                                <td>@row[2]</td>
+                                <td class="btn-center">
+                                    <a href="@Url.Action("Edit", new { id=row[0]})">
+                                        <i class="far fa-edit edit"></i>
+                                    </a>
+                                </td>
+                                <td class="btn-center">
+                                    <a href="@Url.Action("Delete", new { id=row[0]})">
+                                        <i class="fas fa-trash-alt delete"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    </tbody>
+                    </table>
+
+                <div id="dtBasicExample_wrapper" class="dataTables_wrapper dt_bootstrap4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="dataTables_length bs-select" id="dtBasicExample_Length">
+                                <label>
+                                    Show Items
+                                    <select name="dtBasicExample_Length" aria-controls="dtBasicExample" class="custom-select form-control">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </div>

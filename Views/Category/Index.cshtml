@@ -1,0 +1,151 @@
+﻿@*@model IEnumerable<POS_OJT.Models.Category>*@
+@*@model POS_OJT.ViewModels.CategoryVM;*@
+@using System.Data;
+@model DataTable
+
+<style>
+    h2 {
+        background: #269956;
+        color: white;
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 0;
+    }
+    .edit {
+        color: #28a745;
+    }
+    .delete{
+        color: red;
+    }
+    table {
+        border: 1px solid #dee2e6;
+        padding: 10px
+    }
+    th {
+        color: #504c4c;
+        background: #dee2e6;
+        border-right: 1px solid #d8d8d8;
+    }
+    td {
+        border-right: 1px solid #dee2e6;
+    }
+    .searchContainer {
+        border: 1px solid #dee2e6;
+        width: 100%;
+        padding: 12px;
+        text-align: left;
+        border-radius: 6px;
+    }
+    .pcn {
+        padding-left: 10px;
+    }
+    form {
+        padding-top: 20px;
+    }
+    select {
+        width: 46%;
+        height: 36px;
+        margin-left: 49px;
+        margin-right: 20px;
+        border: 1px solid #dee2e6;
+    }
+    .btn-success {
+        background: #269956;
+        width: 77px;
+    }
+    .create{
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="container">
+        @using (Html.BeginForm("Search", "Category", FormMethod.Post))
+        {
+            <div class="form-group searchContainer">
+                <label class="pcn">Parent Category Name</label>
+                <select class="form-select" name="ddl">
+                    @foreach (var listItem in (IEnumerable<SelectListItem>)ViewBag.Category)
+                    {
+                        <option value=@listItem.Value @(listItem.Selected ? "selected" : "")>
+                            @listItem.Text
+                        </option>
+                    }
+                </select>
+                <input type="submit" value="Search" class="btn btn-success" />
+            </div>
+        }
+    <div>
+        @*@Html.ActionLink("Add", "Create", new { @class = "btn btn-success" })*@
+        <a class="btn btn-success create" href="@Url.Action("Create")">
+            Add
+        </a>
+    </div>
+
+        @{int i = 0;}
+
+    <div class="heading">
+        <h2>Category List</h2>
+        <table id="pagination" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        No
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Parent Category
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow dr in Model.Rows)
+                {
+                    <tr>
+                        <td>
+                            <span>@(++i)</span>
+                        </td>
+                        <td>
+                            @dr["name"]
+                        </td>
+                        <td>
+                            @(dr["parent_category"] == DBNull.Value ? "-" : dr["parent_category"])
+                        </td>
+                        <td>
+                            @(dr["description"] == DBNull.Value ? "-" : dr["description"])
+                        </td>
+                        <td class="btn-center">
+                            <a href="@Url.Action("Edit", new { id = dr["id"]})">
+                                <i class="far fa-edit edit"></i>
+                            </a>
+                        </td>
+                        <td class="btn-center">
+                            <a href="@Url.Action("Delete", new { id = dr["id"]})">
+                                <i class="fas fa-trash-alt delete"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function() {
+        $("#name").change(function() {
+            var ddtext = $("#name option:selected").text();
+            $("#hidden1").val(ddtext);
+        });
+    });
+</script>

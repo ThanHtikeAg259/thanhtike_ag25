@@ -1,0 +1,162 @@
+﻿@model PagedList.IPagedList<POS_OJT.Models.SaleClass>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{ ViewBag.Title = "Sale";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section Sale
+{
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <form class="needs-validation border rounded" novalidate>
+                    <!-- First Row -->
+                    <div class="form-row m-2">
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Invoice Number</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="invoiceNumber" placeholder="Invoice Number">
+                            </div>
+                        </div>
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Status</label>
+                            <div class="col-md-6">
+                                <select id="inputState" class="form-select form-control">
+                                    <option selected>Select Status</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Second Row -->
+                    <div class="form-row mt-4 ml-2">
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">From Date</label>
+                            <div class="col-md-6">
+                                <input type="date" date-format="yyyy-mm-dd" class="form-control" id="fromDate">
+                                @*<input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2015-08-09" />*@
+                            </div>
+                        </div>
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">To Date</label>
+                            <div class="col-md-6">
+                                <input type="date" date-format="yyyy-mm-dd" class="form-control" id="fromDate">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Third Row -->
+                    <div class="form-row mt-4 ml-2">
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Shop</label>
+                            <div class="col-md-6">
+                                <select id="inputState" class="form-select form-control">
+                                    <option selected>Select Shop</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Searchby</label>
+                            <div class="col-md-8">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                    <label class="form-check-label" for="inlineCheckbox1">Today</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                    <label class="form-check-label" for="inlineCheckbox2">Weekly</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                                    <label class="form-check-label" for="inlineCheckbox3">Monthly</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option3">
+                                    <label class="form-check-label" for="inlineCheckbox3">Yearly</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Buttons-->
+                    <button class="btn btn-success mt-3 ml-2 mb-2" type="submit" id="search">Search</button>
+                    <button class="btn btn-success mt-3 ml-2 mb-2" type="submit" id="reset">Reset</button>
+                    <button class="btn btn-success mt-3 ml-2 mb-2" type="submit" id="download">Download</button>
+                </form>
+            </div><!-- /.container-fluid -->
+
+            <div class="container-fluid">
+                <div class="bg-success mt-2 border rounded">
+                    <p class="m-2">Sale List</p>
+                </div>
+                <table class="table mt-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
+                            </th>
+                            <th scope="col">
+                                @Html.ActionLink("Invoice Number", "Index", new { sortOrder = ViewBag.InvoiceSortParm })
+                            </th>
+                            <th scope="col">
+                                @Html.ActionLink("Shop Name", "Index", new { sortOrder = ViewBag.ShopSortParm })
+                            </th>
+                            <th scope="col">Terminal Name</th>
+                            <th scope="col">Staff Name</th>
+                            <th scope="col">Amount Tax</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Remark</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td> @item.sale_date </td>
+                                <td> @item.invoice_number </td>
+                                <td> @item.shop_id </td>
+                                <td> @item.terminal_id </td>
+                                <td> @item.invoice_status </td>
+                                <td> @item.amount_tax </td>
+                                <td> @item.amount </td>
+                                <td> @item.paid_amount </td>
+                                <td> @item.remark </td>
+                                <td>
+                                    @*<a class="btn btn-success btn-sm" href="#" role="button">Cancle Invoice</a>*@
+                                    <a href="@Url.Action("Cancle", new { id=item.id })" class="btn btn-success btn-sm" onclick="cancle()" id="cancle">
+                                        Cancle Invoice
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success btn-sm" href="#" role="button">Export Excel</a>
+                                </td>
+                            </tr>
+                        </tbody>
+}
+                </table>
+
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Sale",
+                                                                                                                        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+            </div>
+        </div>
+    </div>
+    <!--Sale Javascript-->
+    <script type="text/javascript">
+        $(doucument).ready(function () {
+            $("#fromDate").datepicker({
+                format: 'yyyy-mm-dd'
+            });
+            $("#fromDate").on("change", function () {
+                var fromdate = $(this).value();
+                alert(fromdate);
+            });
+        });
+    </script>
+}

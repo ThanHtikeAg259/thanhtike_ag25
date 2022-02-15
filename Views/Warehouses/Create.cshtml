@@ -1,0 +1,59 @@
+﻿@model POS_OJT.Models.Warehouse
+
+@{ ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            @using (Html.BeginForm("Create", "Warehouses", FormMethod.Post, new { @class = "form-validate" }))
+            {@Html.AntiForgeryToken()
+            <form class="needs-validation border rounded m-0 m-auto" novalidate>
+                <h4>Warehouse Create</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-row m-2">
+                    <label class="control-label col-md-4">Warehouse Name</label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row m-2">
+                    <label class="control-label col-md-4">Address<span class="text-danger">&nbsp;&nbsp;*</span></label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = " form-control", placeholder = "Address" } })
+                        @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row m-2">
+                    <label class="control-label col-md-4" for="phone_number_1">Primary Phone</label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.phone_number_1, new { htmlAttributes = new { @class = "form-control", placeholder = "Primary Phone" } })
+                        @Html.ValidationMessageFor(model => model.phone_number_1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row m-2">
+                    <label class="control-label col-md-4" for="phone_number_2">Secondary Phone</label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.phone_number_2, new { htmlAttributes = new { @class = "form-control", placeholder = "Secondary Phone" } })
+                        @Html.ValidationMessageFor(model => model.phone_number_2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-row m-2 mb-2 justify-content-center">
+                    <div class="col-md-12 bg-light p-3 border rounded">
+                        <input type="submit" value="Submit" class="btn btn-success col-md-1" id="btn_center" />
+                        <a href="/Warehouses/Index" class="btn btn-success col-md-1" id="back">Back</a>
+                    </div>
+                </div>
+            </form>}
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+        </div>
+    </div>
+</div>

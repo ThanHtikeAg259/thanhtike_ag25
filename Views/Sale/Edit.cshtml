@@ -1,0 +1,121 @@
+﻿@using System;
+@using System.Web;
+@using System.Web.Mvc.Html;
+@using System.Data;
+@model System.Data.DataTable
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <form class="needs-validation border rounded" novalidate>
+                    <p class="bg-success m-auto p-2">Sales Invoice</p>
+                    <!-- First Row -->
+                    <div class="form-row m-3">
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Invoice Number</label>
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Rows[0]["invoice_number"], new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.Rows[0]["invoice_number"], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Sale Date From</label>
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Rows[0]["sale_date"], new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.Rows[0]["sale_date"], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Second Row -->
+                    <div class="form-row mt-4 m-3">
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Staff Name</label>
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Rows[0]["staff_name"], new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.Rows[0]["staff_name"], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Terminal Name</label>
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Rows[0]["terminal_name"], new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.Rows[0]["terminal_name"], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Third Row -->
+                    <div class="form-row mt-4 m-3">
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Amount</label>
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Rows[0]["amount"], new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.Rows[0]["amount"], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 row">
+                            <label for="inputPassword" class="col-md-4 col-form-label">Total</label>
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Rows[0]["paid_amount"], new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.Rows[0]["paid_amount"], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <!--Textarea-->
+                    <div class="form-row mt-4 m-3">
+                        <label for="reasonTextareaLabel" class="col-md-2 col-form-label">Reason</label>
+                        @Html.TextAreaFor(m => m.Rows[0]["remark"], new { rows = "5", cols = "10", @class = "col-md-8 form-control", @maxlength = "10000" })
+                        @Html.ValidationMessageFor(m => m.Rows[0]["remark"], "", new { @class = "text-danger" })
+                    </div>
+                    <!--Table-->
+                    <div class="col-md-12 mr-3">
+                        <table id="pagination" class="table border">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center col-md-1">No</th>
+                                    <th scope="col" class="text-center col-md-3">Product Name</th>
+                                    <th scope="col" class="text-center col-md-2">Price</th>
+                                    <th scope="col" class="text-center col-md-1">Quantity</th>
+                                    <th scope="col" class="text-center col-md-3">Remark</th>
+                                </tr>
+                            </thead>
+                            @{int index = 1;}
+                            @foreach (DataRow rows in Model.Rows)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@index</td>
+                                        <td>@rows[10]</td>
+                                        <td>@rows[11]</td>
+                                        <td>@rows[12]</td>
+                                        <td>@rows[13]</td>
+                                    </tr>
+                                </tbody>
+                                index++;
+                            }
+                        </table>
+                    </div>
+
+                    <input type="submit" value="Cancle Invoice" onclick="textChange()" class="btn btn-success col-md-2 justify-content-center mb-3" />
+                    <a href="/Sale/Index" class="btn btn-success col-md-2 mb-3" id="back">Back</a>
+                </form>
+
+            }
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+        </div><!-- /.container-fluid -->
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/Sale.js"></script>

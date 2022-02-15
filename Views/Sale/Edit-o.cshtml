@@ -1,0 +1,114 @@
+﻿@model IEnumerable<POS_OJT.ViewModels.SaleViewModel>
+
+@{ ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            @using (Html.BeginForm())
+            {@Html.AntiForgeryToken()
+
+            <form class="needs-validation border rounded" novalidate>
+                <p class="bg-success m-auto p-2">Sales Invoice</p>
+                <!-- First Row -->
+                <div class="form-row m-3">
+                    <div class="col-md-6 row">
+                        <label for="inputPassword" class="col-md-4 col-form-label">Invoice Number</label>
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.invoice_number, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.invoice_number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 row">
+                        <label for="inputPassword" class="col-md-4 col-form-label">Sale Date From</label>
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.sale_date, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.sale_date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <!-- Second Row -->
+                <div class="form-row mt-4 m-3">
+                    <div class="col-md-6 row">
+                        <label for="inputPassword" class="col-md-4 col-form-label">Staff Name</label>
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.staff_name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.staff_name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 row">
+                        <label for="inputPassword" class="col-md-4 col-form-label">Terminal Name</label>
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.terminal_name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.terminal_name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <!-- Third Row -->
+                <div class="form-row mt-4 m-3">
+                    <div class="col-md-6 row">
+                        <label for="inputPassword" class="col-md-4 col-form-label">Amount</label>
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 row">
+                        <label for="inputPassword" class="col-md-4 col-form-label">Total</label>
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.total, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.total, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <!--Textarea-->
+                <div class="form-row mt-4 m-3">
+                    <label for="reasonTextareaLabel" class="col-md-2 col-form-label">Reason</label>
+                    @*<textarea class="col-md-8 form-control" id="reasonTextarea" rows="3"></textarea>*@
+                    @Html.TextAreaFor(m => m.reason, new { rows = "5", cols = "10", @class = "col-md-8 form-control", @maxlength = "10000" })
+                    @Html.ValidationMessageFor(m => m.reason, "", new { @class = "text-danger" })
+                </div>
+                <!--Table-->
+                <div class="col-md-12 mr-3">
+                    <table class="table border">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center col-md-1">No</th>
+                                <th scope="col" class="text-center col-md-3">Product Name</th>
+                                <th scope="col" class="text-center col-md-2">Price</th>
+                                <th scope="col" class="text-center col-md-1">Quantity</th>
+                                <th scope="col" class="text-center col-md-3">Remark</th>
+                            </tr>
+                        </thead>
+                        @{int index = 1;}
+                        @foreach (var item in Model)
+                        {
+                            <tbody>
+                                <tr class="text-center">
+                                    <td>@index</td>
+                                    <td>@item</td>
+                                    <td>@item</td>
+                                    <td>@item</td>
+                                    <td>@item</td>
+                                </tr>
+                            </tbody>
+                            index++;
+                        }
+                    </table>
+                </div>
+
+                <!-- Buttons-->
+                @*<button class="btn btn-success mt-3 ml-2 mb-2" type="submit" id="cle_inovice">Cancle Invoice</button>
+                    <button class="btn btn-success mt-3 ml-2 mb-2" type="submit" id="back">Back</button>*@
+                <input type="submit" value="Cancle Invoice" class="btn btn-success justify-content-center m-3" />
+                <a href="/Sale/Index" class="btn btn-success col-md-1" id="back">Back</a>
+            </form>}
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+        </div><!-- /.container-fluid -->
+    </div>
+</div>

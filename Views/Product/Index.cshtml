@@ -1,0 +1,221 @@
+﻿@using System.Data;
+@using System.Web.Mvc.Html;
+@model DataTable
+
+    <style>
+        h2 {
+            background: #269956;
+            color: white;
+            font-size: 18px;
+            padding: 10px;
+            margin-bottom: 0;
+        }
+
+        .edit {
+            color: #28a745;
+        }
+
+        .delete {
+            color: red;
+        }
+
+        table {
+            border: 1px solid #dee2e6;
+            padding: 10px
+        }
+
+        th {
+            color: #504c4c;
+            background: #dee2e6;
+            border-right: 1px solid #d8d8d8;
+        }
+
+        td {
+            border-right: 1px solid #dee2e6;
+        }
+
+        .searchContainer {
+            border: 1px solid #dee2e6;
+            width: 100%;
+            padding: 12px;
+            text-align: left;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .pcn {
+            padding-left: 10px;
+        }
+
+        form {
+            padding-top: 20px;
+        }
+
+        select {
+            width: 46%;
+            height: 36px;
+            margin-left: 26px;
+            margin-right: 16px;
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-success {
+            background: #269956;
+            width: 77px;
+        }
+
+        .create {
+            margin-bottom: 10px;
+        }
+
+        .lb1 {
+            margin-right: 16px;
+        }
+
+        .sb {
+            border: 1px solid #dee2e6;
+            border-radius: 3px;
+            height: 36px;
+            width: 26%;
+        }
+
+        .btn1 {
+            width: 106px;
+        }
+
+        .form-add {
+            margin-bottom: 10px;
+        }
+
+            .form-add a {
+                margin-right: 100px;
+            }
+
+            .form-add form {
+                display: inline;
+            }
+    </style>
+
+    <div class="content-wrapper">
+        <div class="container">
+
+            @using (Html.BeginForm("Search", "Product", FormMethod.Post))
+            {
+                <div class="searchContainer">
+                    <label for="product" class="lb1">Product Name</label>
+                    @Html.TextBox("Name", "Product Name", new { @class = "sb sb2" })
+
+                    <label>Parent Category</label>
+                    <select class="sb" name="ddl">
+                        @foreach (var listItem in (IEnumerable<SelectListItem>)ViewBag.Product)
+                        {
+                            <option value=@listItem.Value @(listItem.Selected ? "selected" : "")>
+                                @listItem.Text
+                            </option>
+                        }
+                    </select>
+                    <input type="submit" value="Search" class="btn btn-success" />
+                </div>
+            }
+            <div class="form-add">
+                <a class="btn btn-success create" href="@Url.Action("Create")">
+                    Add
+                </a>
+                @using (Html.BeginForm("ReadExcel", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input type="file" id="dataFile" name="upload" onchange="return fileValidation()" required />
+                    <input type="submit" name="btnUpload" class="btn btn-success btn1" value="Import Excel" />
+                }
+            </div>
+
+            @{int i = 0;}
+
+            <h2>Product List</h2>
+            <table id="pagination" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            No
+                        </th>
+                        <th>
+                            Photo
+                        </th>
+                        <th>
+                            Product Code
+                        </th>
+                        <th>
+                            Product Name
+                        </th>
+                        <th>
+                            Parent Category
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow dr in Model.Rows)
+                    {
+                        <tr>
+                            <td>
+                                <span>@(++i)</span>
+                            </td>
+                            <td>
+                                <img src="~/images/upload/product/@dr["product_image_path"]" width="100" height="100" />
+                            </td>
+                            <td>
+                                @dr["product_code"]
+                            </td>
+                            <td>
+                                @dr["name"]
+                            </td>
+                            <td>
+                                @(dr["product_category"] == null ? "-" : dr["product_category"])
+                            </td>
+                            <td>
+                                @(dr["description"] == null ? "-" : dr["description"])
+                            </td>
+                            <td class="btn-center">
+                                <a href="@Url.Action("Edit", new { id = dr["pid"]})">
+                                    <i class="far fa-edit edit"></i>
+                                </a>
+                            </td>
+                            <td class="btn-center">
+                                <a href="@Url.Action("Delete", new { id = dr["pid"]})">
+                                    <i class="fas fa-trash-alt delete"></i>
+                                </a>
+                            </td>
+                            <td class="btn-center">
+                                <a class="btn btn-success create" href="@Url.Action("Clone", new { id = dr["pid"]})">
+                                    Product Clone
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                    @if (Model.Rows.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="11" class="text-red text-center text-bold">No match data found!</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        $("#name").change(function () {
+            var ddtext = $("#name option:selected").text();
+            $("#hidden1").val(ddtext);
+        });
+    });
+</script>
+

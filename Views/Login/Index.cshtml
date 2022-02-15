@@ -1,0 +1,91 @@
+﻿@model POS_OJT.Models.Staff
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <style>
+        p {
+            background: #269956;
+            margin: 0;
+            height: 30px;
+            padding-left: 10px;
+            padding-top: 10px;
+
+        }
+        form {
+            position: absolute;
+            left: 32%;
+            top: 20%;
+            width: 500px;
+            border: 1px solid #ccc;
+        }
+        form div {
+            padding-top: 20px;
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        .lb2 {
+            padding-right: 26px;
+        }
+        .field-validation-error {
+            color: red;
+        }
+        .staff {
+            font-weight: bold;
+        }
+        input {
+            height: 24px;
+            border: 1px solid #cac0c0;
+            border-radius: 3px;
+        }
+        input:nth-child(2) {
+            position: relative;
+            left: 3px;
+        }
+        .btn-login {
+            background: #269956;
+            width: 100px;
+            height: 30px;
+            margin-bottom: 16px;
+            color: white;
+            border-radius: 3px;
+            border: 0;
+        }
+        tr {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+            <p>Login</p>
+            <div>
+                <label for="staff" class="lb1">User Number</label>
+                @Html.EditorFor(model => model.staff_number)
+                @Html.ValidationMessageFor(model => model.staff_number)
+            </div>
+            <div>
+                <label for="password" class="lb2">Password</label>
+                @Html.EditorFor(model => model.password)
+                @Html.ValidationMessageFor(model => model.password)
+            </div>
+            <div>
+                <input type="submit" name="name" class="btn-login" value="Login" />
+            </div>
+        }
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+﻿@model POS_OJT.Models.Stock
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Stock</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.warehouse_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.warehouse_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shop_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shop_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.inout_flg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.inout_flg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.source_location_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.source_location_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.remark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.remark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.is_deleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.is_deleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_datetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_datetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.update_user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.update_user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.update_datetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.update_datetime)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

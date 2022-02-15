@@ -1,0 +1,83 @@
+﻿@model POS_OJT.ViewModel.StockViewModel
+
+@{ ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h2>Edit</h2>
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            @using (Html.BeginForm())
+            {@Html.AntiForgeryToken()
+            <form class="needs-validation border rounded m-0 m-auto" novalidate>
+                <div class="bg-success mt-2 border rounded">
+                    <p class="m-2">Transfer Stock Form</p>
+                </div>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.stock_id)
+
+            <div class="form-row m-2 mb-2 justify-content-center">
+                @Html.HiddenFor(model => model.product_id)
+                <label class="control-label col-sm-2">Product Code</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.product_code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.product_code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+                <div class="form-row m-2 mb-2 justify-content-center">
+                    <label class="control-label col-sm-2">Product Name</label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.product_name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.product_name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row m-2 mb-2 justify-content-center">
+                    @Html.HiddenFor(model => model.shop_id)
+                    <label class="control-label col-sm-2">Shop Name</label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.shop_name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.shop_name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row m-2 mb-2 justify-content-center">
+                    @Html.HiddenFor(model => model.warehouse_id)
+                    <label class="control-label col-sm-2">Warehouse Name</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("warehouselist", ViewBag.warehouselistname as SelectList, "Choose Warehouse", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row m-2 mb-2 justify-content-center">
+                    <label class="control-label col-sm-2">Quantity</label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.stock_quantity, new { htmlAttributes = new { @class = "form-control", @min = "0", placeholder = "Transfer Count" } })
+                        @Html.ValidationMessageFor(model => model.stock_quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row m-2 mb-2 justify-content-center">
+                    <label class="control-label col-sm-2">Price</label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.stock_price, new { htmlAttributes = new { @class = "form-control", placeholder = "Price for Sales", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.stock_price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-row m-2 mb-2 justify-content-center">
+                    <div class="col-md-12 bg-light p-3 border rounded">
+                        <input type="submit" value="Submit" class="btn btn-success col-md-1" id="btn_center" />
+                        <a href="/Stocks/Index" class="btn btn-success col-md-1" id="back">Back</a>
+                    </div>
+                </div>
+            </form>}
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

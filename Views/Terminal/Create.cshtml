@@ -1,0 +1,148 @@
+﻿@model POS_OJT.Models.Terminal
+
+@{ ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<style>
+    .form-group span {
+        color: red;
+    }
+
+    .form {
+        margin: 50px 10% 0 10%;
+        background: white;
+        box-shadow: 0px 3px 8px #dee2e6;
+    }
+
+    h2 {
+        background: #269956;
+        color: white;
+        font-size: 18px;
+        padding: 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        margin-bottom: 0;
+    }
+
+    .wrapperd {
+        padding: 20px 10% 25px 10%;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .btns {
+        text-align: center;
+        margin-left: 13%;
+        padding-top: 10px;
+    }
+
+    .ml {
+        padding-left: 30%;
+        font-weight: bold;
+    }
+
+    .btn-success {
+        width: 78px;
+        margin-right: 16px;
+        background: #269956;
+    }
+
+    label {
+        width: 30%;
+    }
+
+    .input_text,
+    select,
+    textarea {
+        width: 65%;
+        border: 1px solid #dee2e6;
+        border-radius: 3px;
+        color: #4c4747;
+    }
+
+    span {
+        color: red;
+    }
+
+    .input_text {
+        height: 30px;
+    }
+
+    .barcode {
+        display: inline;
+    }
+
+    .vt {
+        vertical-align: top;
+    }
+
+    tex
+    .select {
+        height: 30px;
+    }
+
+    .btns {
+        text-align: center;
+        margin-left: 13%;
+    }
+
+    .mt{
+        padding-top: 10px;
+    }
+
+    .mb {
+        padding-bottom: 10px;
+    }
+
+    textarea {
+        height: 60px;
+    }
+</style>
+
+
+<div class="content-wrapper">
+    <div class="form">
+            @using (Html.BeginForm("Create", "Terminal", FormMethod.Post, new { @class = "form-validate" }))
+            {@Html.AntiForgeryToken()
+            <form class="needs-validation border rounded m-0 m-auto" novalidate>
+                <h2>Terminal Create</h2>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-row m-2 mt">
+                    <label class="control-label col-md-4">Terminal Name<span>*</span></label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row m-2 mt">
+                    <label class="control-label col-md-4">Shop Name<span>*</span></label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("shLst", ViewBag.shoplistname as SelectList, "Select Shop", new { @class = "form-control dd-validate" })
+                        <div class="validation-msg text-danger"><p>Please select shop name</p></div>
+                    </div>
+                </div>
+
+                @*<div class="form-row m-2 mb-2 justify-content-center">
+                    <div class="col-md-12 bg-light p-3 border rounded">
+                        <input type="submit" value="Submit" class="btn btn-success justify-content-center submit-validate" id="btn_center" />
+                        <a href="/Terminal/Index" class="btn btn-success col-md-1" id="back">Back</a>
+                    </div>
+                </div>*@
+                <div class="form-group btns mb">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                    <a class="btn btn-success create" href="@Url.Action("Index", new { ID = 0, name = string.Empty })">
+                        Back
+                    </a>
+                </div>
+            </form>
+            }
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+
+            <script src="~/Content/jquery-3.6.0.min.js"></script>
+            <script src="~/Content/app.js"></script>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@using System.Data;
+@model System.Data.DataTable
+
+@{ ViewBag.Title = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<style>
+    h2 {
+        background: #269956;
+        color: white;
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 0;
+    }
+    .mb{
+        margin-bottom: 15px;
+    }
+    .btn-success {
+        background: #269956;
+        width: 77px;
+    }
+    .edit {
+        color: #28a745;
+    }
+    table {
+        border: 1px solid #dee2e6;
+        padding: 10px
+    }
+
+    th {
+        color: #504c4c;
+        background: #dee2e6;
+        border-right: 1px solid #d8d8d8;
+    }
+
+    td {
+        border-right: 1px solid #dee2e6;
+    }
+</style>
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid mb">
+                <a href="/Shop/Create" class="btn btn-success col-md-1">Add</a>
+            </div>
+
+            <div class="container-fluid">
+                    <h2>Shop List</h2>
+
+                <section>
+                    <table id="pagination" class="table border">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="text-center col-md-1">No</th>
+                                <th scope="col" class="text-center col-md-1">Name</th>
+                                <th scope="col" class="text-center col-md-3">Address</th>
+                                <th scope="col" class="text-center col-md-3">Primary Phone</th>
+                                <th scope="col" class="text-center col-md-3">Secondary Phone</th>
+                                <th scope="col" class="col-md-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int index = 1;}
+                            @foreach (DataRow row in Model.Rows)
+                            {
+                                <tr class="text-center">
+                                    <td>@index</td>
+                                    <td>@row[1]</td>
+                                    <td>@row[2]</td>
+                                    <td>@row[3]</td>
+                                    <td>@row[4]</td>
+
+                                    @*<td><a href="" class="far fa-edit" type="button"></a></td>*@
+                                    @*<td> @Html.ActionLink("Edit this", "Edit", new { id = whItem.id })</td>*@
+                                    <td class="btn-center">
+                                        <a href="@Url.Action("Edit", new { id=row[0]})">
+                                            <i class="far fa-edit edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                        </table>
+                </section>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,102 @@
+﻿@model POS_OJT.Models.Category
+
+<style>
+    .form-group span {
+        color: red;
+    }
+    .form {
+        margin: 50px 20% 0 20%;
+        background: white;
+        box-shadow: 0px 3px 8px #dee2e6;
+    }
+    h2 {
+        background: #269956;
+        color: white;
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 0;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .wrapperd {
+        padding: 20px 10% 25px 10%;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .btns {
+        text-align: center;
+        margin-left: 13%;
+    }
+    .btn-success {
+        width: 78px;
+        margin-right: 16px;
+    }
+    label {
+        width: 30%;
+    }
+    .input_text,
+    select,
+    textarea {
+        width: 65%;
+        border: 1px solid #dee2e6;
+        border-radius: 3px;
+        color: #4c4747;
+    }
+    .input_text {
+        height: 30px;
+    }
+    .vt {
+        vertical-align: top;
+    }
+    tex
+    .select {
+        height: 30px;
+    }
+    textarea {
+        height: 60px;
+    }
+</style>
+<div class="content-wrapper">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form">
+            <h2>Category Edit</h2>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.id)
+
+            <div class="wrapperd">
+                <div class="form-group">
+                    <label class="vt">Name</label>
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "input_text" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label class="vt">Description</label>
+                        @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "input_text" } })
+                        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="btns">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                        <a class="btn btn-success create" href="@Url.Action("Index")">
+                            Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

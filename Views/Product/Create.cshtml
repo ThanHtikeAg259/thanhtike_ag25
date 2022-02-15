@@ -1,0 +1,230 @@
+﻿@using POS_OJT.Models
+@using POS_OJT.Controllers
+@model POS_OJT.Models.Product
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <style>
+        .form-group span {
+            color: red;
+        }
+
+        .form {
+            margin: 50px 10% 0 10%;
+            background: white;
+            box-shadow: 0px 3px 8px #dee2e6;
+        }
+
+        h2 {
+            background: #269956;
+            color: white;
+            font-size: 18px;
+            padding: 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            margin-bottom: 0;
+        }
+
+        .wrapperd {
+            padding: 20px 10% 25px 10%;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .btns {
+            text-align: center;
+            margin-left: 13%;
+        }
+
+        .ml{
+            padding-left: 30%;
+            font-weight: bold;
+        }
+
+        .btn-success {
+            width: 78px;
+            margin-right: 16px;
+            background: #269956;
+        }
+
+        label {
+            width: 30%;
+        }
+
+        .input_text,
+        select,
+        textarea {
+            width: 65%;
+            border: 1px solid #dee2e6;
+            border-radius: 3px;
+            color: #4c4747;
+        }
+
+        .input_text {
+            height: 30px;
+        }
+
+        .barcode {
+            display: inline;
+        }
+
+        .vt {
+            vertical-align: top;
+        }
+
+        tex
+        .select {
+            height: 30px;
+        }
+
+        textarea {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("Insert", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="content-wrapper">
+            <div class="form">
+                <h2>Product Create</h2>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="wrapperd">
+                    <div class="form-group">
+                        <label for="category" class="lb1">Product Name<span>*</span></label>
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "input_text" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category" class="lb1">Short Name<span>*</span></label>
+                        @Html.EditorFor(model => model.short_name, new { htmlAttributes = new { @maxlength = "20", @class = "input_text" } })
+                        <p class="ml">(20 characters only)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="ddlCategory">
+                            @foreach (var listItem in (IEnumerable<SelectListItem>)ViewBag.CateList)
+                            {
+                                <option value=@listItem.Value @(listItem.Selected ? "selected" : "")>
+                                    @listItem.Text
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="vt">Shop Name<span>*</span></label>
+                        <select name="ddlShop" multiple="" required>
+                            @foreach (var listItem in (IEnumerable<SelectListItem>)ViewBag.ShopList)
+                            {
+                                <option value=@listItem.Value @(listItem.Selected ? "selected" : "")>
+                                    @listItem.Text
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sales Price<span>*</span></label>
+                        @Html.EditorFor(model => model.sale_price, new { htmlAttributes = new { @min = "0", @class = "input_text" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="auto_generate">
+                            <input type="checkbox" id="auto_generate" onclick="ShowHideDiv(this)" />
+                            Auto generated barcode
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="manual">
+                            <input type="checkbox" id="manual" onclick="input(this)" />
+                            Input Barcode manually
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bar Code</label>
+                        @Html.EditorFor(model => model.barcode, new { htmlAttributes = new { @class = "form-control input_text barcode" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="lb1">Product Image</label>
+                        @Html.TextBoxFor(m => m.product_image_path, new { type = "file" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Minimum Quantity<span>*</span></label>
+                        @Html.EditorFor(model => model.minimum_quantity, new { htmlAttributes = new { @min = "0", @class = "input_text" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category" class="lb1">Manufacture Date</label>
+                        @Html.EditorFor(model => model.mfd_date, new { htmlAttributes = new { @class = "input_text datepicker" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category" class="lb1">Expired Date</label>
+                        @Html.EditorFor(model => model.expire_date, new { htmlAttributes = new { @class = "input_text datepicker" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="vt">Description</label>
+                        @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "input_text" } })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" name="ddlCheckBox" value="1">
+                        <label>Active</label>
+                    </div>
+
+                    <div class="btns">
+                        <input type="submit" value="Submit" class="btn btn-success" />
+                        <a class="btn btn-success create" href="@Url.Action("Index", new { ID = 0, name = string.Empty })">
+                            Back
+                        </a>
+                    </div>    
+                </div>
+                </div>
+            </div>   
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+<script>
+    var auto_generate = document.querySelector("#auto_generate");
+    var manual = document.querySelector("#manual");
+    var barcode = document.querySelector(".barcode");
+    function ShowHideDiv(auto_generate) {
+
+        if (auto_generate.checked) {
+            manual.disabled = true;
+            barcode.readOnly = true;
+        }
+        if (!auto_generate.checked) {
+            manual.disabled = false;
+            barcode.readOnly = false;
+        }
+    }
+    function input(manual) {
+        if (manual.checked) {
+            auto_generate.disabled = true;
+            barcode.focus();
+        }
+        if (!manual.checked) {
+            auto_generate.disabled = false;
+        }
+    }
+</script>
+</body>
+</html>

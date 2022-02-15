@@ -1,0 +1,240 @@
+﻿@using POS_OJT.Models
+@using POS_OJT.Controllers
+@model POS_OJT.Models.Product
+
+@{
+    var selectShop = ViewBag.selectshop;
+}
+
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <style>
+        .form-group span {
+            color: red;
+        }
+
+        .form {
+            margin: 50px 10% 0 10%;
+            background: white;
+            box-shadow: 0px 3px 8px #dee2e6;
+        }
+
+        h2 {
+            background: #269956;
+            color: white;
+            font-size: 18px;
+            padding: 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            margin-bottom: 0;
+        }
+
+        .ml {
+            padding-left: 36%;
+            font-weight: bold;
+        }
+
+        .wrapperd {
+            padding: 20px 10% 25px 10%;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .btns {
+            text-align: center;
+            margin-left: 13%;
+        }
+
+        .btn-success {
+            width: 78px;
+            margin-right: 16px;
+            background: #269956;
+        }
+
+        label {
+            width: 30%;
+        }
+
+        .input_text,
+        select,
+        textarea {
+            width: 60%;
+            border: 1px solid #dee2e6;
+            border-radius: 3px;
+            color: #4c4747;
+            margin-left: 5%;
+        }
+
+        .input_text {
+            height: 30px;
+        }
+
+        .file {
+            width: 60%;
+            margin-left: 5%;
+        }
+
+        .vt {
+            vertical-align: top;
+        }
+
+        tex
+        .select {
+            height: 30px;
+        }
+
+        textarea {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="container">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form">
+                    <h2>Product Edit</h2>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.id)
+
+                <div class="wrapperd">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label for="category" class="lb1">Product Name<span>*</span></label>
+                            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "input_text" } })
+                            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label for="category" class="lb1">Short Name<span>*</span></label>
+                            @Html.EditorFor(model => model.short_name, new { htmlAttributes = new { @maxlength = "20", @class = "input_text" } })
+                            <p>(20 characters only)</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Category<span>*</span></label>
+                            @foreach (var listItem in (IEnumerable<SelectListItem>)Session["categorylist"])
+                            {
+                                <input class="input_text" type="text" value="@listItem.Text" readonly />
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label class="vt">Shop Name<span>*</span></label>
+                            <select name="ddlShop" multiple="">
+                                @{int icount = 0;
+                                }
+                                @foreach (var listItem in (IEnumerable<SelectListItem>)Session["shoplist"])
+                                {
+
+                                    //foreach (var item in selectShop)
+                                    //{
+                                    if (icount < selectShop.Count)
+                                    {
+                                        <option value=@listItem.Value @(listItem.Value == selectShop[icount].Value ? "selected" : "")>
+                                            @listItem.Text
+                                        </option>
+
+                                    }
+                                    else
+                                    {
+                                        <option value=@listItem.Value >@listItem.Text
+                                        </option>
+                                    }
+                                    icount++;
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+
+                    @*<option value=@listItem.Value>
+            @listItem.Text @(listItem.Value == item.Value ? "selected" : "")
+        </option>*@
+                    @*@foreach (var item in selectShop)
+        {
+            foreach (var listItem in (IEnumerable<SelectListItem>)Session["shoplist"])
+            {
+                <option value=@listItem.Value @(listItem.Value == item.Value ? "selected" : "")>
+                    @listItem.Text
+                </option>
+            }
+        }*@
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Sales Price<span>*</span></label>
+                            @Html.EditorFor(model => model.sale_price, new { htmlAttributes = new { @class = "input_text" } })
+                            @Html.ValidationMessageFor(model => model.sale_price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Product Image</label>
+                            @Html.TextBoxFor(model => model.product_image_path, new { type = "file", @class = "file" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Minimum Quantity<span>*</span></label>
+                            @Html.EditorFor(model => model.minimum_quantity, new { htmlAttributes = new { @class = "input_text" } })
+                            @Html.ValidationMessageFor(model => model.minimum_quantity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Manufacture Date</label>
+                            @Html.EditorFor(model => model.mfd_date, new { htmlAttributes = new { @class = "input_text datepicker" } })
+                            @Html.ValidationMessageFor(model => model.mfd_date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Expire Date</label>
+                            @Html.EditorFor(model => model.expire_date, new { htmlAttributes = new { @class = "input_text datepicker" } })
+                            @Html.ValidationMessageFor(model => model.expire_date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label class="vt">Description</label>
+                            @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "input_text" } })
+                            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="btns">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                        <a class="btn btn-success create" href="@Url.Action("Index", new { ID = 0, name = string.Empty })">
+                            Back
+                        </a>
+                    </div>
+                </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>

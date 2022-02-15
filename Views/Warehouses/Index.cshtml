@@ -1,0 +1,67 @@
+﻿@using System;
+@using System.Web;
+@using System.Web.Mvc.Html;
+@using System.Data;
+@model System.Data.DataTable
+
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{ ViewBag.Title = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <a href="/Warehouses/Create" class="btn btn-success col-md-1">Add</a>
+            </div><!-- /.container-fluid -->
+
+            <div class="container-fluid">
+                <div class="bg-success mt-2 border rounded-top">
+                    <p class="m-2">Warehouse List</p>
+                </div>
+
+                <section>
+                    <div class="table-responsive" style="overflow-x: auto;">
+                        <table id="pagination" class="table border">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="text-center">No.</th>
+                                    <th scope="col" class="text-center col-md-1">Name</th>
+                                    <th scope="col" class="text-center col-md-3">Address</th>
+                                    <th scope="col" class="text-center col-md-3">Primary Phone</th>
+                                    <th scope="col" class="text-center col-md-3">Secondary Phone</th>
+                                    <th scope="col" class="col-md-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int index = 1;}
+                                @foreach (DataRow row in Model.Rows)
+                                {
+
+                                    <tr class="text-center">
+                                        <td>@index</td>
+                                        <td>@row[1]</td>
+                                        <td>@row[2]</td>
+                                        <td>@row[3]</td>
+                                        <td>@row[4]</td>
+                                        <td>
+                                            <a href="@Url.Action("Edit", new { id=row[0] })" class="btn btn-primary">
+                                                <i class="far fa-edit"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                    index++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+

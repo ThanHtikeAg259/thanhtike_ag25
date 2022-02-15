@@ -1,0 +1,356 @@
+﻿@model POS_OJT.Models.Staff
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<style>
+    .form-group span {
+        color: red;
+    }
+
+    .form {
+        margin: 50px 10% 0 10%;
+        background: white;
+        box-shadow: 0px 3px 8px #dee2e6;
+    }
+
+    .form-row {
+        padding: 0 15px 0 15px;
+    }
+
+    h2 {
+        background: #269956;
+        color: white;
+        font-size: 18px;
+        padding: 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        margin-bottom: 0;
+    }
+
+    .wrapperd {
+        padding: 20px 10% 25px 10%;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .btns {
+        text-align: center;
+        margin-left: 13%;
+    }
+
+    .ml {
+        padding-left: 30%;
+        font-weight: bold;
+    }
+
+    .btn-success {
+        width: 78px;
+        margin-right: 16px;
+        background: #269956;
+    }
+
+    label {
+        width: 50%;
+    }
+
+    .input_text,
+    select,
+    textarea {
+        border: 1px solid #dee2e6;
+        border-radius: 3px;
+        color: #4c4747;
+    }
+
+    select,
+    textarea {
+        width: 65%;
+    }
+
+    .input_text {
+        width: 85%;
+        height: 39px;
+    }
+
+    .barcode {
+        display: inline;
+    }
+
+    .vt {
+        vertical-align: top;
+    }
+
+    tex
+    .select {
+        height: 30px;
+    }
+
+    .form-control {
+        width: 85%;
+    }
+
+    .cbox {
+        margin-left: 6px;
+    }
+
+    .margin-style {
+        padding-left: 8px;
+    }
+
+    .un {
+        display: inline;
+        padding-right: 10px;
+    }
+
+    .unf {
+        width: 66%;
+        display: inline;
+    }
+
+    .b {
+        width: 55%;
+    }
+
+    .ml {
+        margin-left: 5px;
+    }
+
+    .mb {
+        padding-bottom: 10px;
+    }
+
+    textarea {
+        height: 60px;
+    }
+
+    .img-100 {
+        width: 100px;
+    }
+
+    .sz-100 {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="form">
+
+        @using (Html.BeginForm("Edit", "Staff", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <h2>User Edit</h2>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                </div>
+                <div class="form-group col-6">
+                    <label class="un">User No:</label>
+                    @Html.EditorFor(model => model.staff_number, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.staff_number, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">User Name</label>
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="">User Role</label>
+                    @*@Html.DropDownList("StaffRoleList", (IEnumerable<SelectListItem>)ViewBag.staffrList, "Select Role", new { @class = "form-control", required = "required" })*@
+                    @Html.DropDownList("StaffRoleList", (IEnumerable<SelectListItem>)ViewBag.staffRole, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.role, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Password</label>
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="">Confirmed Password</label>
+                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Position</label>
+                    @Html.DropDownList("StaffPositionList", (IEnumerable<SelectListItem>)ViewBag.staffPosition, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.position, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="">User Type</label>
+                    @Html.DropDownList("StaffTypeList", (IEnumerable<SelectListItem>)ViewBag.staffType, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.staff_type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">NRC No</label>
+                    @Html.EditorFor(model => model.nrc_number, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nrc_number, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="">Bank Account Number</label>
+                    @Html.EditorFor(model => model.bank_account_number, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.bank_account_number, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label class="row ml-0">Gender</label>
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.gender, "1", new { @class = "form-check-input" })
+                        <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.gender, "2", new { @class = "form-check-input" })
+                        <label class="form-check-label">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.gender, "3", new { @class = "form-check-input" })
+                        <label class="form-check-label">Other</label>
+                    </div>
+                </div>
+
+                <div class="form-group col-4 ml-2">
+                    <label class="row">Marital Status</label>
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.marital_status, "1", new { @class = "form-check-input" })
+                        <label class="form-check-label">Single</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.marital_status, "2", new { @class = "form-check-input" })
+                        <label class="form-check-label">Married</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Phone Number 1</label>
+                    @Html.EditorFor(model => model.phone_number_1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.phone_number_1, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="">Phone Number 2</label>
+                    @Html.EditorFor(model => model.phone_number_2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.phone_number_2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Date of Birth</label>
+                    @Html.EditorFor(model => model.dob, new { htmlAttributes = new { @class = "input_text date-picker" } })
+                    @Html.ValidationMessageFor(model => model.dob, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="">Graduated University</label>
+                    @Html.EditorFor(model => model.graduated_univeristy, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.graduated_univeristy, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Race</label>
+                    @Html.EditorFor(model => model.race, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.race, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="">City</label>
+                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Address</label>
+                    @Html.TextAreaFor(model => model.address, new { rows = "3", @class = "form-control", @maxlength = "10000" })
+                    @Html.ValidationMessageFor(model => model.race, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="" class="d-block">Profile Image</label>
+                    <div class="margin-style row">
+                        @Html.TextBoxFor(model => model.photo, new { type = "file", @class = "b", onchange = "preview(event)" })
+                        <img id="previewProfile" class="img-100 rounded-lg mr-2 sz-100" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Join From</label>
+                    @Html.EditorFor(model => model.join_from, new { htmlAttributes = new { @class = "input_text datepicker" } })
+                    @Html.ValidationMessageFor(model => model.join_from, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="">Join To</label>
+                    @Html.EditorFor(model => model.join_to, new { htmlAttributes = new { @class = "input_text datepicker" } })
+                    @Html.ValidationMessageFor(model => model.join_to, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Shop Name</label>
+                    @*@Html.DropDownList("ddlShop", ViewBag.shopname as SelectList, new { @class = "form-control" })*@
+                    @Html.DropDownListFor(model => model.shop_id, ViewBag.shopname as SelectList, new { @class = "form-control" })
+                </div>
+            </div>
+
+            @*<div class="form-row">
+                    <div class="form-check">
+                        <input type="checkbox" value="@Model.staff_type" />
+                    </div>
+                </div>*@
+            @*<div class="form-row">
+                <div class="form-group">
+                    <input type="checkbox" class="cbox" name="ddlCheckBox" value="1">
+                    <label>Active</label>
+                </div>
+            </div>*@
+
+            <div class="form-row mb">
+                <input type="submit" value="Create" class="btn btn-success" />
+                <a class="btn btn-success create" href="@Url.Action("Index", new { ID = 0, name = string.Empty })">
+                    Back
+                </a>
+            </div>
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+
+        <script type="text/javascript">
+            var preview = function (event) {
+                var result = document.getElementById("previewProfile");
+                result.src = URL.createObjectURL(event.target.files[0]);
+            };
+        </script>
+    </div>
+</div>
+
+

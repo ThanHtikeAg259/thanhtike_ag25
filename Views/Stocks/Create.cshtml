@@ -1,0 +1,113 @@
+﻿@using System;
+@using System.Web;
+@using System.Web.Mvc.Html;;
+@using System.Data;
+@model System.Data.DataTable
+@{ ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+
+            @using (Html.BeginForm())
+            {@Html.AntiForgeryToken()
+
+                            <form class="needs-validation border rounded" id="formReset">
+                                <!-- First Row -->
+                                <div class="form-row m-2">
+                                    <div class="col-md-6 row">
+                                        <label for="inputPassword" class="col-md-4 col-form-label">Product Category</label>
+                                        <div class="col-md-6">
+                                            @Html.DropDownList("parentcategoryList", ViewBag.parentcategorylistname as SelectList, "Select Category", new { @class = "form-control" })
+                                            @*@Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 row">
+                                        <label for="inputPassword" class="col-md-4 col-form-label">Sub Category</label>
+                                        <div class="col-md-6">
+                                            @Html.DropDownList("subcategoryList", ViewBag.subcategorylistname as SelectList, "Select Sub Category", new { @class = "form-control" })
+                                            @*@Html.ValidationMessageFor(model => model.product_id, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Second Row -->
+                                <div class="form-row mt-4 ml-2">
+                                    <div class="col-md-6 row">
+                                        <label for="inputPassword" class="col-md-4 col-form-label">Product Name</label>
+                                        <div class="col-md-6">
+                                            @Html.DropDownList("productList", ViewBag.productlistname as SelectList, "Select Product", new { @class = "form-control" })
+                                            @*@Html.ValidationMessageFor(model => model.product_id, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons-->
+                                <button class="btn btn-success mt-3 ml-2 mb-2 col-md-1" type="submit" id="search">Search</button>
+                            </form>}
+        </div>
+        <div class="container-fluid">
+            <div class="bg-success mt-2 border rounded">
+                <p class="m-2">Stock List</p>
+            </div>
+            <div class="table-responsive" style="overflow-x: auto;">
+                <table id="pagination" class="table mt-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Choose Warehouse or shop</th>
+                            <th scope="col">Name </th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Minimal Quantity</th>
+                            <th scopse="col">Unit Price</th>
+                            <th scope="col">Remark</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @{ int index = 1;}
+                    @foreach (DataRow row in Model.Rows)
+                    {
+
+                        <tbody>
+                            <tr>
+                                <td>@index</td>
+                                <td>  @row[1]</td>
+                                <td>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                        <label class="form-check-label" for="inlineCheckbox1">Warehouse</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                        <label class="form-check-label" for="inlineCheckbox2">Shop</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span id="shop_list">@Html.DropDownList("shoplist", ViewBag.shoplistname as SelectList, "Choose Shop", new { @class = "form-control" })</span>
+                                    <span id="warehouse_list">@Html.DropDownList("warehouselist", ViewBag.warehouselistname as SelectList, "Choose Warehouse", new { @class = "form-control" })</span>
+                                </td>
+                                <td> <input type="type" class="form-control" name="name" value="@row[4]" /> </td>
+                                <td> <input type="type" class="form-control" name="name" value="@row[5]" /> </td>
+                                <td> <input type="type" class="form-control" name="name" value="@row[6]" /> </td>
+                                <td><input type="type" class="form-control" name="name" value="@row[7]" /></td>
+                                <td>
+                                    @Html.ActionLink(" ", "Delete", new { id = row[0] }, new { @class = "btn btn-success fas fa-trash-alt", onclick = "return confirm('Are you sure you want to delete?')" })
+                                </td>
+                            </tr>
+                        </tbody>
+                        index++;
+                    }
+                </table>
+
+            </div>
+            <button class="btn btn-success ml-2 col-md-1" type="submit" id="search">Submit</button>
+            <a href="/Stocks/Index" class="btn btn-success ml-2 col-md-1" id="back">Back</a>
+        </div>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+    </div>
+</div>
